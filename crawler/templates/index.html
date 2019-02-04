@@ -1,0 +1,33 @@
+{% extends 'bootstrap/base.html' %}'
+
+
+{% block content %}
+
+<header>
+    <div class="jumbotron text-center">
+        <h1>Scraping tool</h1>
+    </div>
+</header>
+<div class="container">
+    <h6> Please enter the url to scrape bellow(it should contain a listing)</h6>
+    <form action="/scrape">
+        <div class="form-row">
+            <input type="text" value="Enter url to scrape" class="form-control" />
+        </div>
+        <br>
+        <div class="form-row">
+            <input type="submit" value="Scrape New data" class="btn-info btn-lg" />
+        </div>
+    </form>
+
+</div>
+<div class="container" class="panel panel-default">
+    <div>
+        <h2>Progress</h2>
+    </div>
+    <div>
+        <h3>Errors</h3>
+    </div>
+</div>
+<br><br><br>
+{% endblock %}
