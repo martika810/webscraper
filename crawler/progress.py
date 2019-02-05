@@ -12,6 +12,15 @@ def save_total_number_items(number):
     progress['total'] = number
     pickle.dump(progress, open("progress.pickle", "wb"))
 
+def read_progress():
+    try:
+        progress = pickle.load(open("progress.pickle", "rb"))
+        return progress
+    except (OSError, IOError) as e:
+        init()
+        progress = pickle.load(open("progress.pickle", "rb"))
+        return progress
+
 
 def read_number_items_scraped_so_far():
     try:

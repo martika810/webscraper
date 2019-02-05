@@ -1,8 +1,8 @@
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from crawler.crawler import BeerCrawler
-from crawler.config.beerwulf_config import BeerwulfConfig
+from crawler import BeerCrawler
+from config.beerwulf_config import BeerwulfConfig
 
 #1. https://www.beerwulf.com/en-gb
 #2. https://drizly.com/beer/c2
@@ -17,7 +17,7 @@ def setup_browser():
     options = Options()
     #options.add_argument('--headless')
     #options.add_argument('--disable-gpu')
-    browser = webdriver.Chrome('./chromedriver', chrome_options=options)
+    browser = webdriver.Chrome('../chromedriver', chrome_options=options)
     browser.implicitly_wait(15)
     return browser
 

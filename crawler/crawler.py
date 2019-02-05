@@ -1,7 +1,7 @@
-from crawler.scraper import PageScraper
+from scraper import PageScraper
 from pathlib import Path
 import pandas as pd
-import pickle
+
 
 class BeerCrawler:
     def __init__(self,browser,config):

@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import pandas as pd
-from crawler.progress import save_number_items_scraped_so_far
+from mqserver import MQSender
+from progress import save_number_items_scraped_so_far
 
 class PageScraper:
     def __init__(self,browser,config):
@@ -13,7 +14,6 @@ class PageScraper:
         else:
             return 0
 
-
     def count_product_in_page(self, page_html, url):
         # load the product url from configuration
         if not self.config.isProductUrl(url):
@@ -25,6 +25,8 @@ class PageScraper:
 
     def extract_all_products_in_this_page(self, filename_to_store_results,number_products,dataframe):
 
+        total_number_items = self.total_number_items_to_scrape(self.browser.page_source,self.browser.current_url)
+
         for product_index in range(1,number_products+1):
             all_products_in_this_page = self.browser.find_elements_by_css_selector(self.config.product_css_selector)
             all_products_in_this_page[product_index-1].click()
@@ -34,7 +36,9 @@ class PageScraper:
             save_number_items_scraped_so_far(dataframe.shape[0])
 
         dataframe.to_csv(filename_to_store_results)
+        mqsender = MQSender('hello').send_message(dataframe.shape[0],total_number_items)
         json_filename = filename_to_store_results.replace(".csv",".json")
+
         dataframe.to_json(json_filename)
         return dataframe
 
