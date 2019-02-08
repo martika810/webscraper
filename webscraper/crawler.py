@@ -1,4 +1,4 @@
-from scraper import PageScraper
+from webscraper.scraper import PageScraper
 from pathlib import Path
 import pandas as pd
 

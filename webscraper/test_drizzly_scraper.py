@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from scraper import PageScraper
-from config.drizzly_config import DrizzlyConfig
+from webscraper.scraper import PageScraper
+from webscraper.config import DrizzlyConfig
 
 def test_count_product_in_page():
     url_to_test = "https://drizly.com/belgian-beer/co2428-c2"

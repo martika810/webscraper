@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import pandas as pd
-from mqserver import MQSender
-from progress import save_number_items_scraped_so_far
+from webscraper.progress import Progress
 
 class PageScraper:
     def __init__(self,browser,config):
@@ -24,19 +23,27 @@ class PageScraper:
             return 0
 
     def extract_all_products_in_this_page(self, filename_to_store_results,number_products,dataframe):
-
+        progress = Progress()
         total_number_items = self.total_number_items_to_scrape(self.browser.page_source,self.browser.current_url)
+        progress.save_total_number_items(total_number_items)
 
         for product_index in range(1,number_products+1):
             all_products_in_this_page = self.browser.find_elements_by_css_selector(self.config.product_css_selector)
             all_products_in_this_page[product_index-1].click()
 
-            product_serie = self.extract_product(self.browser.page_source)
+            product_html_page = self.browser.page_source
+            product_data = self.config.extract_product_data(product_html_page)
+            self.browser.back()
+
+            product_serie = pd.Series(product_data,index= product_data.keys())
             dataframe = dataframe.append(product_serie, ignore_index=True)
-            save_number_items_scraped_so_far(dataframe.shape[0])
+            progress.save_number_items_scraped_so_far(dataframe.shape[0])
+            progress.add_item_scraped(product_data)
 
         dataframe.to_csv(filename_to_store_results)
-        mqsender = MQSender('hello').send_message(dataframe.shape[0],total_number_items)
+        #mqsender = MQSender('hello').send_message(dataframe.shape[0],total_number_items)
+
+
         json_filename = filename_to_store_results.replace(".csv",".json")
 
         dataframe.to_json(json_filename)

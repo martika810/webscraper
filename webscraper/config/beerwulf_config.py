@@ -124,7 +124,7 @@ class BeerwulfConfig:
     def extract_total_number_items(self,html_page):
         html_parser = BeautifulSoup(html_page, 'html.parser')
         total_number_items_element =html_parser.select(self.total_number_items_selector)
-        total_number_items =int(total_number_items_element[0].text.split(' ')[1])
+        total_number_items =int(total_number_items_element[1].text.split('/')[1].split(' ')[1])
         return total_number_items
 
 

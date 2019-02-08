@@ -2,3 +2,9 @@ venv
 *.pyc
 .idea
 chromedriver
+*.whl
+*.pex
+webscraper.egg-info
+build/
+dist/
+*.egg

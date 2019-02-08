@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from crawler.scraper import PageScraper
-from crawler.config.beerwulf_config import BeerwulfConfig
+from webscraper.scraper import PageScraper
+from webscraper.config import BeerwulfConfig
 
 def test_count_product_in_page():
     url_to_test = "https://www.beerwulf.com/en-gb/c/beers/?page=1"
