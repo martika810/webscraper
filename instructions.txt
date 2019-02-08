@@ -1,0 +1,19 @@
+packaging
+look at simple-pex
+
+pip3 wheel -w . .
+
+pex --python=python3 --disable-cache -f $PWD myexample -e samplepkg.main -o samplepkg.pex
+
+
+from setuptools import setup
+with open("requirements.txt") as requirements_file:
+  requirements = [
+    requirement for requirement in requirements_file.read().split("\n")
+    if requirement != ""
+  ]
+
+setup (
+  name = "myexample",
+  packages=['samplepkg'],
+  install_requires = requirements
